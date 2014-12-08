@@ -3,7 +3,7 @@
 <div class="crm-submit-buttons">
 {include file="CRM/common/formButtons.tpl" location="top"}
 </div>
-{foreach from=$settings item=elementName}{$elementName}
+{foreach from=$settings item=elementName}
   <div class="crm-section">
     <div class="label">{$form.$elementName.label}</div>
     <div class="content">{$form.$elementName.html}</div>
