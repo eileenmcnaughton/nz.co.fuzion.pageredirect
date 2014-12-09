@@ -151,9 +151,9 @@ function pageredirect_civicrm_pre($op, $objectName, $id, &$params) {
           $params['is_active'] = 1;
           CRM_Core_Session::setStatus(ts('You attempted to disable the default domain contribution but this is not allowed. Please alter at <a href= "%1">Administer - CiviContribute- Custom Redirect</a> first', array(1 => CRM_Utils_System::url('civicrm/admin/setting/customredirect'))));
         }
-        else {
-          throw new CRM_Core_Exception(ts('cannot delete this page. It is the default domain contribution page'));
-        }
+      }
+      elseif ($op =='delete') {
+        throw new CRM_Core_Exception(ts('cannot delete this page. It is the default domain contribution page'));
       }
     }
   }
