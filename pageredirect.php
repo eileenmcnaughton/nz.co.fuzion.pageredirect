@@ -118,8 +118,21 @@ function pageredirect_civicrm_unhandled_exception($exception) {
   if (!get_class($exception) == 'CRM_Contribute_Exception_InactiveContributionPageException') {
     return;
   }
-  $pageID = civicrm_api3('setting', 'getvalue', array('group' => 'Page Redirect Preferences', 'name' => 'pageredirect_default_contribution_page_id'));
-  CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/contribute/transact', array('reset' => 1, 'id' => $pageID)));
+  try {
+    $pageID = civicrm_api3('setting', 'getvalue', array(
+      'group' => 'Page Redirect Preferences',
+      'name' => 'pageredirect_default_contribution_page_id'
+    ));
+  }
+  catch(Exception $e) {
+
+  }
+  if (!empty($pageID)) {
+    CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/contribute/transact', array(
+      'reset' => 1,
+      'id' => $pageID
+    )));
+  }
 }
 
 /**
