@@ -115,7 +115,7 @@ function pageredirect_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
  * @param CRM_Core_Exception $exception
  */
 function pageredirect_civicrm_unhandled_exception($exception) {
-  if (!get_class($exception) == 'CRM_Contribute_Exception_InactiveContributionPageException') {
+  if (!(get_class($exception) == 'CRM_Contribute_Exception_InactiveContributionPageException')) {
     return;
   }
   try {
