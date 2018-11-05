@@ -29,8 +29,6 @@
  *
  * @package CRM
  * @copyright CiviCRM LLC (c) 2004-2013
- * $Id$
- *
  */
 /*
  * Settings metadata file
@@ -41,16 +39,15 @@ return array(
     'group_name' => 'Page Redirect Preferences',
     'group' => 'page_redirect',
     'name' => 'page_redirect_default_contribution_page_id',
-    'title' => 'Redirect disabled pages to',
+    'title' => ts('Redirect disabled pages to'),
     'type' => 'Integer',
     'default' => NULL,
     'add' => '4.4',
     'is_domain' => 1,
     'is_contact' => 0,
-    'description' => 'Default Contribution Page for Domain',
-    'help_text' => 'If people try to access a disabled contribution page they will be re-directed to this page',
-    'quick_form_type' => 'Element',
-    'html_type' => 'Text',
+    'description' => ts('Default Contribution Page for Domain'),
+    'help_text' => ts('If people try to access a disabled contribution page they will be re-directed to this page'),
+    'html_type' => 'text',
   ),
   /*
   'pageredirect_default_contribution_page_url' => array(
