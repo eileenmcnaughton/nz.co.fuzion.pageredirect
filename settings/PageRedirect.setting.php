@@ -33,13 +33,14 @@
 /*
  * Settings metadata file
  */
+use CRM_Pageredirect_ExtensionUtil as E;
 
 return array(
   'pageredirect_default_contribution_page_id' => array(
     'group_name' => 'Page Redirect Preferences',
     'group' => 'page_redirect',
     'name' => 'page_redirect_default_contribution_page_id',
-    'title' => ts('Redirect disabled pages to'),
+    'title' => E::ts('Redirect disabled pages to'),
     'type' => 'Integer',
     'default' => NULL,
     'add' => '4.4',
