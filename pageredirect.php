@@ -2,6 +2,8 @@
 
 require_once 'pageredirect.civix.php';
 
+use CRM_Pageredirect_ExtensionUtil as E;
+
 /**
  * Implementation of hook_civicrm_config
  *
@@ -115,7 +117,9 @@ function pageredirect_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
  * @param CRM_Core_Exception $exception
  */
 function pageredirect_civicrm_unhandled_exception($exception) {
-  if (!(get_class($exception) == 'CRM_Contribute_Exception_InactiveContributionPageException')) {
+  if (!(get_class($exception) == 'CRM_Contribute_Exception_InactiveContributionPageException' ||
+    get_class($exception) == 'CRM_Contribute_Exception_PastContributionPageException' || 
+    get_class($exception) == 'CRM_Contribute_Exception_FutureContributionPageException')) {
     return;
   }
   try {
@@ -126,6 +130,11 @@ function pageredirect_civicrm_unhandled_exception($exception) {
   }
   catch(Exception $e) {
 
+  }
+  // If we have caught a PastContributionPageExectpion then push a status message about the problem
+  if (get_class($exception) == 'CRM_Contribute_Exception_PastContributionPageException' || 
+    get_class($exception) == 'CRM_Contribute_Exception_FutureContributionPageException') {
+    CRM_Core_Session::setStatus($exception->getMessage());
   }
   if (!empty($pageID)) {
     CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/contribute/transact', array(
@@ -220,28 +229,10 @@ function pageredirect_civicrm_buildForm($formName, &$form) {
  * @param array $menu
  */
 function pageredirect_civicrm_navigationMenu(&$menu) {
-  $maxID = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
-  $ID = $maxID + 1;
-  foreach ($menu as $parentIndexID => $menuItem) {
-    if ($menuItem['attributes']['label'] == 'Administer') {
-      foreach($menuItem['child'] as $index => $child) {
-        if ($child['attributes']['label'] == 'CiviContribute') {
-          $parentID = $index;
-          $menu[$parentIndexID]['child'][$index]['child'][$ID] =  array(
-            'attributes' => array (
-              'label' => 'Custom Redirect',
-              'name' => 'Custom Redirect',
-              'url' => 'civicrm/admin/setting/customredirect',
-              'permission' => 'administer CiviCRM',
-              'operator' => null,
-              'separator' => null,
-              'parentID' => $parentID,
-              'active' => 1,
-            ));
-          break;
-        }
-      }
-    }
-  }
+  _pageredirect_civix_insert_navigation_menu($menu, 'Administer/CiviContribute', [
+    'label' => E::ts('Custom Redirect'),
+    'name' => 'Custom Redirect',
+    'url' => 'civicrm/admin/setting/customredirect',
+    'permission' => 'administer CiviCRM',
+  ]);
 }
-
