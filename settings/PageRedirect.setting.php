@@ -46,8 +46,8 @@ return array(
     'add' => '4.4',
     'is_domain' => 1,
     'is_contact' => 0,
-    'description' => ts('Default Contribution Page for Domain'),
-    'help_text' => ts('If people try to access a disabled contribution page they will be re-directed to this page'),
+    'description' => E::ts('Default Contribution Page for Domain'),
+    'help_text' => E::ts('If people try to access a disabled contribution page they will be re-directed to this page'),
     'html_type' => 'text',
   ),
   /*

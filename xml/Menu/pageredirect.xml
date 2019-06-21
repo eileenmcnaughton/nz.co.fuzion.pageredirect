@@ -4,6 +4,6 @@
     <path>civicrm/admin/setting/customredirect</path>
     <page_callback>CRM_Pageredirect_Form_Admin_Form_Setting_CustomRedirect</page_callback>
     <title>Custom Redirect</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviCRM</access_arguments>
   </item>
 </menu>
