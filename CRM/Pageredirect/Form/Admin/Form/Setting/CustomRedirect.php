@@ -36,7 +36,7 @@ class CRM_Pageredirect_Form_Admin_Form_Setting_CustomRedirect extends CRM_Admin_
         'id' => $fields['pageredirect_default_contribution_page_id']
       ));
     }
-    catch (CiviCRM_API3_Exception $e) {
+    catch (CRM_Core_Exception $e) {
       return array('pageredirect_default_contribution_page_id' => E::ts('Please select a valid enabled page'));
     }
     return TRUE;
