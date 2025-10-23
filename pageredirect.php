@@ -76,7 +76,7 @@ function pageredirect_civicrm_unhandled_exception($exception) {
  * @param $id
  * @param $params
  * @throws CRM_Core_Exception
- * @throws CiviCRM_API3_Exception
+ * @throws CRM_Core_Exception
  */
 function pageredirect_civicrm_pre($op, $objectName, $id, &$params) {
   if($objectName == 'ContributionPage') {
