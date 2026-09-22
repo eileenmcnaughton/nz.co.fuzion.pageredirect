@@ -12,7 +12,7 @@ class CRM_Pageredirect_Form_Admin_Form_Setting_CustomRedirect extends CRM_Admin_
   function buildQuickForm() {
     $this->_settings['pageredirect_default_contribution_page_id'] = 'Page Redirect Preferences';
     $this->assign('settings', array_keys($this->_settings));
-    $this->addFormRule(array('CRM_Pageredirect_Form_Admin_Form_Setting_CustomRedirect', 'formRule'));
+    $this->addFormRule(['CRM_Pageredirect_Form_Admin_Form_Setting_CustomRedirect', 'formRule']);
     parent::buildQuickForm();
   }
 
@@ -31,13 +31,13 @@ class CRM_Pageredirect_Form_Admin_Form_Setting_CustomRedirect extends CRM_Admin_
    */
   static function formRule($fields, $files, $self) {
     try {
-      civicrm_api3('contribution_page', 'getsingle', array(
+      civicrm_api3('contribution_page', 'getsingle', [
         'is_active' => 1,
         'id' => $fields['pageredirect_default_contribution_page_id']
-      ));
+      ]);
     }
     catch (CRM_Core_Exception $e) {
-      return array('pageredirect_default_contribution_page_id' => E::ts('Please select a valid enabled page'));
+      return ['pageredirect_default_contribution_page_id' => E::ts('Please select a valid enabled page')];
     }
     return TRUE;
   }
