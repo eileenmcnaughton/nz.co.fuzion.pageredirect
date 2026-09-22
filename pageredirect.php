@@ -45,10 +45,10 @@ function pageredirect_civicrm_unhandled_exception($exception) {
     return;
   }
   try {
-    $pageID = civicrm_api3('setting', 'getvalue', array(
+    $pageID = civicrm_api3('setting', 'getvalue', [
       'group' => 'Page Redirect Preferences',
       'name' => 'pageredirect_default_contribution_page_id'
-    ));
+    ]);
   }
   catch(Exception $e) {
 
@@ -59,10 +59,10 @@ function pageredirect_civicrm_unhandled_exception($exception) {
     CRM_Core_Session::setStatus($exception->getMessage());
   }
   if (!empty($pageID)) {
-    CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/contribute/transact', array(
+    CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/contribute/transact', [
       'reset' => 1,
       'id' => $pageID
-    )));
+    ]));
   }
 }
 
@@ -81,10 +81,10 @@ function pageredirect_civicrm_unhandled_exception($exception) {
 function pageredirect_civicrm_pre($op, $objectName, $id, &$params) {
   if($objectName == 'ContributionPage') {
     try {
-      $defaultPageID = civicrm_api3('setting', 'getvalue', array(
+      $defaultPageID = civicrm_api3('setting', 'getvalue', [
           'group' => 'Page Redirect Preferences',
           'name' => 'pageredirect_default_contribution_page_id'
-        ));
+        ]);
     }
     catch (Exception $e) {
       return;
@@ -93,7 +93,7 @@ function pageredirect_civicrm_pre($op, $objectName, $id, &$params) {
       if ($op == 'edit') {
         if (isset($params['is_active']) && empty($params['is_active'])) {
           $params['is_active'] = 1;
-          CRM_Core_Session::setStatus(ts('You attempted to disable the default domain contribution but this is not allowed. Please alter at <a href= "%1">Administer - CiviContribute- Custom Redirect</a> first', array(1 => CRM_Utils_System::url('civicrm/admin/setting/customredirect'))));
+          CRM_Core_Session::setStatus(ts('You attempted to disable the default domain contribution but this is not allowed. Please alter at <a href= "%1">Administer - CiviContribute- Custom Redirect</a> first', [1 => CRM_Utils_System::url('civicrm/admin/setting/customredirect')]));
         }
       }
       elseif ($op =='delete') {
@@ -107,21 +107,21 @@ function pageredirect_civicrm_enableDisable($recordBAO, $recordID, $isActive) {
   if (!$isActive) {
     if($recordBAO =='CRM_Contribute_BAO_ContributionPage') {
       try {
-        $defaultPageID = civicrm_api3('setting', 'getvalue', array(
+        $defaultPageID = civicrm_api3('setting', 'getvalue', [
           'group' => 'Page Redirect Preferences',
           'name' => 'pageredirect_default_contribution_page_id'
-        ));
+        ]);
       }
       catch (Exception $e) {
         return;
       }
       if ($recordID == $defaultPageID) {
-        civicrm_api3('contribution_page', 'create', array(
+        civicrm_api3('contribution_page', 'create', [
             'id' => $recordID,
             'is_active' => 1
-          ));
-        CRM_Core_Session::setStatus(ts('You attempted to disable the default domain contribution but this is not allowed. Please alter at <a href= "%1">Administer - CiviContribute- Custom Redirect</a> first', array(1 => CRM_Utils_System::url('civicrm/admin/setting/customredirect'))));
-        CRM_Utils_JSON::output(array('status' => 'record-updated-fail'));
+          ]);
+        CRM_Core_Session::setStatus(ts('You attempted to disable the default domain contribution but this is not allowed. Please alter at <a href= "%1">Administer - CiviContribute- Custom Redirect</a> first', [1 => CRM_Utils_System::url('civicrm/admin/setting/customredirect')]));
+        CRM_Utils_JSON::output(['status' => 'record-updated-fail']);
       }
     }
   }
@@ -130,12 +130,12 @@ function pageredirect_civicrm_enableDisable($recordBAO, $recordID, $isActive) {
 function pageredirect_civicrm_buildForm($formName, &$form) {
   if ($formName =='CRM_Contribute_Form_ContributionPage_Delete') {
     try {
-      $defaultPageID = civicrm_api3('setting', 'getvalue', array(
+      $defaultPageID = civicrm_api3('setting', 'getvalue', [
         'group' => 'Page Redirect Preferences',
         'name' => 'pageredirect_default_contribution_page_id'
-      ));
+      ]);
       if ($defaultPageID == $form->_defaultValues['id']) {
-        CRM_Core_Error::statusBounce(ts('You attempted to delete the default domain contribution but this is not allowed. Please alter at <a href= "%1">Administer - CiviContribute- Custom Redirect</a> first', array(1 => CRM_Utils_System::url('civicrm/admin/setting/customredirect'))));
+        CRM_Core_Error::statusBounce(ts('You attempted to delete the default domain contribution but this is not allowed. Please alter at <a href= "%1">Administer - CiviContribute- Custom Redirect</a> first', [1 => CRM_Utils_System::url('civicrm/admin/setting/customredirect')]));
       }
     }
     catch(Exception $e) {

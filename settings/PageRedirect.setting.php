@@ -35,8 +35,8 @@
  */
 use CRM_Pageredirect_ExtensionUtil as E;
 
-return array(
-  'pageredirect_default_contribution_page_id' => array(
+return [
+  'pageredirect_default_contribution_page_id' => [
     'group_name' => 'Page Redirect Preferences',
     'group' => 'page_redirect',
     'name' => 'page_redirect_default_contribution_page_id',
@@ -49,7 +49,7 @@ return array(
     'description' => E::ts('Default Contribution Page for Domain'),
     'help_text' => E::ts('If people try to access a disabled contribution page they will be re-directed to this page'),
     'html_type' => 'text',
-  ),
+  ],
   /*
   'pageredirect_default_contribution_page_url' => array(
     'group_name' => 'Page Redirect Preferences',
@@ -65,4 +65,4 @@ return array(
     'quick_form_type' => 'Text',
   ),
   */
-);
+];
