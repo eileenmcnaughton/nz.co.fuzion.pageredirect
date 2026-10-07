@@ -1,7 +1,5 @@
 <?php
 
-require_once 'CRM/Core/Form.php';
-
 use CRM_Pageredirect_ExtensionUtil as E;
 /**
  * Form controller class
